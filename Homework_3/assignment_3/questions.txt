@@ -1,0 +1,9 @@
+Questions for Homework 3
+
+- The naïve strin search algorithm is to inefficient to work and the hash sequence still took about 35 minutes to complete 
+
+- The time complexity for the hash algrithm is O(#sequences*#genome_length)
+
+- I'm not so sure about the smace complexity but I'm pretty sure it's O(genome_length*101)
+
+-PB
