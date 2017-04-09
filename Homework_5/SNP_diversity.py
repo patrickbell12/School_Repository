@@ -9,6 +9,8 @@ tbx = pysam.TabixFile("greatapes.fixedchr21.vcf.gz")
 
 sample_list = list((vcf_in.header.samples))
 
+print sample_list
+
 def analyse_allele_site(list_in):	
 	allele = []
 	pi = 0
@@ -37,9 +39,11 @@ def analyse_allele_site(list_in):
 
 def deal_with_samples():
 	#specify desired genea, CAPITALIZE! 
-	sample1 = 'Homo'	#name of 1
+	print "What is genus 1? (Capitalize)>>>>>"
+	sample1 = raw_input()	#name of 1
 	sample1_locations = []
-	sample2 = 'Pan'		#name of 2
+	print "What is genus 2? (Capitalize)>>>>>"
+	sample2 = raw_input()	#name of 2
 	sample2_locations = []
 	
 	#enter test size
