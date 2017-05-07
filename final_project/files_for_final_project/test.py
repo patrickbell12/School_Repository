@@ -5,7 +5,7 @@ C_bed = open('S_cerevisiae_genes.bed','r')
 Paradoxus_genome = open('S_paradoxus.fa','r')
 P_bed = open('S_paradoxus_genes.bed','r')
 
-C_out = open('S_cervisiae_proteome.fasta','w')
+C_out = open('S_cerevisiae_proteome.fasta','w')
 P_out = open('S_paradoxus_proteome.fasta','w')
 
 C_dict = {}
@@ -47,14 +47,9 @@ while True:
 	chrom = Cerevisiae_genome.readline()
 	chrom = chrom.strip('\n')
 	chrom_num = get_number(header)
-	
-	C_dict[chrom_num] = chrom
 
-for key, value in C_dict.iteritems() :
-	print isinstance( key, int )
-	print key
+	C_dict[str(chrom_num)] = chrom
 
-raw_input()
 while True:
 	line = C_bed.readline()
 	if line == '':
@@ -64,25 +59,33 @@ while True:
 	bed_chrom = line[0]
 	bed_chrom_num = get_roman(bed_chrom)
 
-
 	start = int(line[1])
 	stop = int(line[2])
 	gene = line[3]
 	sense = line[5]
 
-	sequence = P_dict[bed_chrom_num]
-
+	sequence = C_dict[str(bed_chrom_num)]
 	sequence_list = list(sequence)
 	transcript = ''.join(sequence_list[(start-1):(stop-1)])
+
+#	if gene == 'YDR395W':
+#		print bed_chrom_num
+#		print gene
+#		print transcript
+#		print len(sequence)
+#		raw_input()
+
 	if sense == '-':
 		transcript = reverse_complement(transcript)
+		C_out.write('>')
 		C_out.write(gene)
-		C_out.write('\t')
+		C_out.write('\n')
 		C_out.write(transcript)
 		C_out.write('\n')
 	else:
+		C_out.write('>')
 		C_out.write(gene)
-		C_out.write('\t')
+		C_out.write('\n')
 		C_out.write(transcript)
 		C_out.write('\n')
 			
@@ -96,7 +99,7 @@ while True:
 	chrom = chrom.strip('\n')
 	chrom_num = get_number(header)
 
-	P_dict[chrom_num] = chrom
+	P_dict[str(chrom_num)] = chrom
 	
 
 while True:
@@ -111,22 +114,24 @@ while True:
 	start = int(line[1]) #Start position
 	stop = int(line[2]) #End position
 	gene = line[3] #gene name
-	gene = gene.strip('.1')
+	gene = gene.split('.')[0]
 	sense = line[5] #positive or negative 
 
-	sequence = P_dict[bed_chrom_num]
+	sequence = P_dict[str(bed_chrom_num)]
 
 	sequence_list = list(sequence)
 	transcript = ''.join(sequence_list[(start-1):(stop-1)])
 	if sense == '-':
 		transcript = reverse_complement(transcript)
+		P_out.write('>')
 		P_out.write(gene)
-		P_out.write('\t')
+		P_out.write('\n')
 		P_out.write(transcript)
 		P_out.write('\n')
 	else:
+		P_out.write('>')
 		P_out.write(gene)
-		P_out.write('\t')
+		P_out.write('\n')
 		P_out.write(transcript)
 		P_out.write('\n')
 
